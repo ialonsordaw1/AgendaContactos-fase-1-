@@ -6,6 +6,7 @@ package ut7.agenda.modelo;
  * clase Contacto
  * 
  * @author David Burguete
+ * @version 1.0
  */
 
 public class Profesional extends Contacto{

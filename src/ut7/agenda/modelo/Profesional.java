@@ -41,7 +41,7 @@ public class Profesional extends Contacto{
 			String nombrea = "";
 			nombrea += palabras[i].charAt(0);
 			nombrea = nombrea.toUpperCase();
-			nombrea += palabras[i].substring(1, palabras[i].length()-1);
+			nombrea += palabras[i].substring(1, palabras[i].length());
 			nombre += nombrea + " ";
 		}
 		return nombre;

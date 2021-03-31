@@ -76,9 +76,16 @@ public class Personal extends Contacto{
 	public void setRelacion(Relacion relacion) {
 		this.relacion = relacion;
 	}
+	/**
+	 * Método toString de la clase Personal
+	 * @retrun toString
+	 */
 	@Override
 	public String toString() {
-		return super.toString() + "Fecha nacimiento: " + fechaNacimiento.toString() + "\nRelacion: " + relacion.name().toUpperCase() + "\n\n";
+		int dia = fechaNacimiento.getDayOfMonth();
+		String mes = fechaNacimiento.getMonth().name().toLowerCase().substring(0, 3) + ".";
+		int año = fechaNacimiento.getYear();
+		return super.toString() + "Fecha nacimiento: " + dia + " " + mes + " " + año + "\nRelacion: " + relacion.name().toUpperCase() + "\n\n";
 	}
 	
 }

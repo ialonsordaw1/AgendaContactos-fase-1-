@@ -134,8 +134,7 @@ public abstract class Contacto implements Comparator<Contacto> {
 	 */
 	@Override
 	public String toString() {
-		String[] clase = this.getClass().getName().split("\\.");
-		return getApellidos() + ", " + getNombre()+ " (" + clase[clase.length-1].toUpperCase() + ")\n"
+		return getApellidos() + ", " + getNombre()+ " (" + this.getClass().getSimpleName().toUpperCase() + ")\n"
 				+ "Tfno: " + getTelefono() + " | email: " + getEmail() + "\n";
 	}
 

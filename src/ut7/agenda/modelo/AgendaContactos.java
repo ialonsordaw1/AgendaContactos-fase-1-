@@ -1,4 +1,5 @@
 package ut7.agenda.modelo;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -60,19 +61,54 @@ public class AgendaContactos {
 	}
 
 	public List<Contacto> buscarContactos(String texto) {
-		ArrayList<Contacto> lista
-		return null;
+		ArrayList<Contacto> lista = new ArrayList<>();
+		Set<Character> entry = agenda.keySet();
+		Iterator<Character> it = entry.iterator();
+		while (it.hasNext()) {
+			Character temp = (Character) it.next();
+			Iterator<Contacto> it2 = agenda.get(temp).iterator();
+			while (it2.hasNext()) {
+				Contacto contacto = (Contacto) it2.next();
+				if(contacto.getNombre().contains(texto) || contacto.getApellidos().contains(texto)) {
+					lista.add(contacto);
+				}
+			}
+		}
+		return lista;
 
 	}
 
 	public List<Personal> personalesEnLetra(char letra) {
-
-		return null;
+		ArrayList<Personal> lista = new ArrayList<>();
+		if(agenda.get(letra) == null)
+			return null;
+		else {
+			Iterator<Contacto> it = agenda.get(letra).iterator();
+			while (it.hasNext()) {
+				Contacto contacto = (Contacto) it.next();
+				if(contacto instanceof Personal) {
+					lista.add((Personal) contacto);
+				}
+			}
+		}
+		return lista;
 	}
 
 	public List<Personal> felicitar() {
-
-		return null;
+		ArrayList<Personal> lista = new ArrayList<>();
+		Set<Character> entry = agenda.keySet();
+		Iterator<Character> it = entry.iterator();
+		while (it.hasNext()) {
+			Character temp = (Character) it.next();
+			Iterator<Personal> it2 = personalesEnLetra(temp).iterator();
+			while (it2.hasNext()) {
+				Personal personal = (Personal) it2.next();
+				if(personal.esCumpleaños()) {
+					lista.add(personal);
+				}
+			}
+		}
+		return lista;
 	}
 
 	public void personalesPorRelacion() {

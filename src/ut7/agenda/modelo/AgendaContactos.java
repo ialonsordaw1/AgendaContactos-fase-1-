@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class AgendaContactos implements Comparator<Personal>{
 	private Map<Character, Set<Contacto>> agenda;
@@ -21,6 +20,7 @@ public class AgendaContactos implements Comparator<Personal>{
 		Set<Contacto> lista = new HashSet<>();
 		if(agenda.isEmpty() || !agenda.containsKey(c.getPrimeraLetra())) {
 			lista.add(c);
+			Collections.sort(lista, new ComparatorCon());
 			agenda.put(c.getPrimeraLetra(), lista);
 		}
 		else{

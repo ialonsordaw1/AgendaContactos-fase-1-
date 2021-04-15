@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,10 +18,15 @@ public class AgendaContactos implements Comparator<Personal>{
 	}
 
 	public void añadirContacto(Contacto c) {
+		List<Contacto> lista2 = new ArrayList<>();
 		Set<Contacto> lista = new HashSet<>();
 		if(agenda.isEmpty() || !agenda.containsKey(c.getPrimeraLetra())) {
-			lista.add(c);
-			Collections.sort(lista, new ComparatorCon());
+			lista2.add(c);
+			Collections.sort(lista2, new ComparatorCon());
+			Iterator it = lista2.iterator();
+			while (it.hasNext()) {
+				lista.add((Contacto) it.next());
+			}
 			agenda.put(c.getPrimeraLetra(), lista);
 		}
 		else{

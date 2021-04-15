@@ -1,5 +1,8 @@
 package ut7.agenda.modelo;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +10,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class AgendaContactos {
+public class AgendaContactos implements Comparator<Personal>{
 	private Map<Character, Set<Contacto>> agenda;
 
 	public AgendaContactos() {
@@ -15,7 +18,7 @@ public class AgendaContactos {
 	}
 
 	public void añadirContacto(Contacto c) {
-		Set<Contacto> lista = new TreeSet<>();
+		Set<Contacto> lista = new HashSet<>();
 		if(agenda.isEmpty() || !agenda.containsKey(c.getPrimeraLetra())) {
 			lista.add(c);
 			agenda.put(c.getPrimeraLetra(), lista);
@@ -69,7 +72,7 @@ public class AgendaContactos {
 			Iterator<Contacto> it2 = agenda.get(temp).iterator();
 			while (it2.hasNext()) {
 				Contacto contacto = (Contacto) it2.next();
-				if(contacto.getNombre().contains(texto) || contacto.getApellidos().contains(texto)) {
+				if(contacto.getNombre().toLowerCase().contains(texto) || contacto.getApellidos().toLowerCase().contains(texto)) {
 					lista.add(contacto);
 				}
 			}
@@ -111,14 +114,83 @@ public class AgendaContactos {
 		return lista;
 	}
 
-	public void personalesPorRelacion() {
-
+	public TreeMap<Relacion, List<String>> personalesPorRelacion() {
+		List<String> list = new ArrayList();
+		List<String> list2 = new ArrayList();
+		List<String> list3 = new ArrayList();
+		List<String> list4 = new ArrayList();
+		List<String> list5 = new ArrayList();
+		List<String> list6 = new ArrayList();
+		TreeMap<Relacion, List<String>> mapa = new TreeMap();
+		Set<Character> entry = agenda.keySet();
+		Iterator<Character> it = entry.iterator();
+		while (it.hasNext()) {
+			Character temp = (Character) it.next();
+			Iterator<Personal> it2 = personalesEnLetra(temp).iterator();
+			while (it2.hasNext()) {
+				Personal temp2 = (Personal) it2.next();
+				String apenon = temp2.getApellidos() + " " + temp2.getNombre();
+				switch (temp2.getRelacion()) {
+				case AMIGOS:
+					list.add(apenon);
+					break;
+				case HIJO:
+					list2.add(apenon);
+					break;
+				case HIJA:
+					list3.add(apenon);
+					break;
+				case MADRE:
+					list4.add(apenon);
+					break;
+				case PADRE:
+					list5.add(apenon);
+					break;
+				case PAREJA:
+					list6.add(apenon);
+					break;
+				}
+			}
+		}
+		if(!list.isEmpty())mapa.put(Relacion.AMIGOS, list);
+		if(!list2.isEmpty())mapa.put(Relacion.HIJO, list2);
+		if(!list3.isEmpty())mapa.put(Relacion.HIJA, list3);
+		if(!list4.isEmpty())mapa.put(Relacion.MADRE, list4);
+		if(!list5.isEmpty())mapa.put(Relacion.PADRE, list5);
+		if(!list6.isEmpty())mapa.put(Relacion.PAREJA, list6);
+		return mapa;
 	}
 
 	public List<Personal> personalesOrdenadosPorFechaNacimiento(char letra) {
-
-		return null;
-
+		List<Personal> lista = personalesEnLetra(letra);
+		Collections.sort(lista, new AgendaContactos());
+		return lista;
 	}
-
+	
+	@Override
+	public int compare(Personal p1, Personal p2) {
+		if (p1.getFechaNacimiento().getYear() > p2.getFechaNacimiento().getYear()) {
+			return 1;
+		}
+		else if (p1.getFechaNacimiento().getYear() < p2.getFechaNacimiento().getYear()) {
+			return -1;
+		}
+		else {
+			if(p1.getFechaNacimiento().getMonthValue() > p2.getFechaNacimiento().getMonthValue()) {
+				return 1;
+			}
+			else if(p1.getFechaNacimiento().getMonthValue() < p2.getFechaNacimiento().getMonthValue()) {
+				return -1;
+			}
+			else {
+				if(p1.getFechaNacimiento().getDayOfMonth() > p2.getFechaNacimiento().getDayOfMonth()) {
+					return 1;
+				}
+				else if(p1.getFechaNacimiento().getDayOfMonth() < p2.getFechaNacimiento().getDayOfMonth()) {
+					return -1;
+				}
+				else return 0;
+			}
+		}
+	} 
 }

@@ -6,11 +6,42 @@ import ut7.agenda.modelo.*;
  */
 public class AgendaIO {
 	public static void importar(AgendaContactos agenda) {
-		
+		String[] linea = obtenerLineasDatos();
+		for (int i = 0; i < linea.length; i++) {
+			Contacto c = parsearLinea(linea[i]);
+			agenda.añadirContacto(c);
+		}
 	}
 
 	private static Contacto parsearLinea(String linea) {
-		return null;
+		String[] formateo = linea.split(",");
+		Contacto c = null;
+		if (formateo[0].trim().equals("1")) {
+			c = new Profesional(formateo[1].trim(), formateo[2].trim(), formateo[3].trim(), formateo[4].trim(), formateo[5].trim());
+		}
+		else {
+			switch (formateo[6].trim().toLowerCase()) {
+			case "amigos":
+				c = new Personal(formateo[1].trim(), formateo[2].trim(), formateo[3].trim(), formateo[4].trim(), formateo[5].trim(), Relacion.AMIGOS);
+				break;
+			case "hijo":
+				c = new Personal(formateo[1].trim(), formateo[2].trim(), formateo[3].trim(), formateo[4].trim(), formateo[5].trim(), Relacion.HIJO);
+				break;
+			case "hija":
+				c = new Personal(formateo[1].trim(), formateo[2].trim(), formateo[3].trim(), formateo[4].trim(), formateo[5].trim(), Relacion.HIJA);
+				break;
+			case "pareja":
+				c = new Personal(formateo[1].trim(), formateo[2].trim(), formateo[3].trim(), formateo[4].trim(), formateo[5].trim(), Relacion.PAREJA);
+				break;
+			case "padre":
+				c = new Personal(formateo[1].trim(), formateo[2].trim(), formateo[3].trim(), formateo[4].trim(), formateo[5].trim(), Relacion.PADRE);
+				break;
+			case "madre":
+				c = new Personal(formateo[1].trim(), formateo[2].trim(), formateo[3].trim(), formateo[4].trim(), formateo[5].trim(), Relacion.MADRE);
+				break;
+			}
+		}
+		return c;
 	}
 
 	/**

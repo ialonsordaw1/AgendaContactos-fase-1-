@@ -40,9 +40,13 @@ public class AgendaContactos implements Comparator<Personal>{
 			agenda.put(c.getPrimeraLetra(), lista);
 		}
 		else{
-			lista = agenda.get(c.getPrimeraLetra());
-			lista.add(c);
+			lista2 = new ArrayList<>(agenda.get(c.getPrimeraLetra()));
+			lista2.add(c);
 			Collections.sort(lista2, new ComparatorCon());
+			Iterator it = lista2.iterator();
+			while (it.hasNext()) {
+				lista.add((Contacto) it.next());
+			}
 			agenda.remove(c.getPrimeraLetra());
 			agenda.put(c.getPrimeraLetra(), lista);
 		}

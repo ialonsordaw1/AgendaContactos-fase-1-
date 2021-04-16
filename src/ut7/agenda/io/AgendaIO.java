@@ -5,6 +5,10 @@ import ut7.agenda.modelo.*;
  * Utilidades para cargar la agenda
  */
 public class AgendaIO {
+	/**
+	 * Metodo para importar una linea de datos a la agenda
+	 * @param agenda
+	 */
 	public static void importar(AgendaContactos agenda) {
 		String[] linea = obtenerLineasDatos();
 		for (int i = 0; i < linea.length; i++) {
@@ -12,7 +16,11 @@ public class AgendaIO {
 			agenda.añadirContacto(c);
 		}
 	}
-
+	/**
+	 * Metodo privado para parsear la linea a importar
+	 * @param linea
+	 * @return Contacto
+	 */
 	private static Contacto parsearLinea(String linea) {
 		String[] formateo = linea.split(",");
 		Contacto c = null;

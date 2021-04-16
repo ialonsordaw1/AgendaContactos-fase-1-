@@ -9,14 +9,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-
+/**
+ * Clase para controlar y manejar la agenda
+ * @author Iñigo Alonso David Burguete
+ * @version 1.0
+ */
 public class AgendaContactos implements Comparator<Personal>{
+	// Crea el mapa
 	private Map<Character, Set<Contacto>> agenda;
-
+	/**
+	 * Constructor de la clase AgendaContactos, que inicia el mapa
+	 */
 	public AgendaContactos() {
 		agenda = new TreeMap<>();
 	}
-
+	/**
+	 * Metodo para añadir contactos al mapa
+	 * @param Contacto c
+	 */
 	public void añadirContacto(Contacto c) {
 		List<Contacto> lista2 = new ArrayList<>();
 		Set<Contacto> lista = new LinkedHashSet<>();
@@ -37,11 +47,18 @@ public class AgendaContactos implements Comparator<Personal>{
 			agenda.put(c.getPrimeraLetra(), lista);
 		}
 	}
-
+	/**
+	 * Metodo que devuelve una lista con los contactos en uan determinada letra
+	 * @param c
+	 * @return Set<Contacto>
+	 */
 	public Set<Contacto> contactosEnLetra(char c) {
 		return agenda.get(c);
 	}
-
+	/**
+	 * Metodo que devuelve el numero total de contactos en el mapa
+	 * @return El total de los contactos
+	 */
 	public int totalContactos() {
 		Set<Character> entry = agenda.keySet();
 		Iterator<Character> it = entry.iterator();
@@ -52,7 +69,10 @@ public class AgendaContactos implements Comparator<Personal>{
 		}
 		return cont;
 	}
-
+	/**
+	 * Metodo toString de la clase AgendaContactos
+	 * @return toString
+	 */
 	@Override
 	public String toString() {
 		String listado = "";
@@ -69,7 +89,11 @@ public class AgendaContactos implements Comparator<Personal>{
 		}
 		return listado;
 	}
-
+	/**
+	 * Metodo que busca contactos en el mapa
+	 * @param texto
+	 * @return lista de contactos
+	 */
 	public List<Contacto> buscarContactos(String texto) {
 		ArrayList<Contacto> lista = new ArrayList<>();
 		Set<Character> entry = agenda.keySet();
@@ -87,7 +111,11 @@ public class AgendaContactos implements Comparator<Personal>{
 		return lista;
 
 	}
-
+	/**
+	 * Metodo que devuelve los contactos personales en una determinada letra
+	 * @param letra
+	 * @return List<Personal>
+	 */
 	public List<Personal> personalesEnLetra(char letra) {
 		ArrayList<Personal> lista = new ArrayList<>();
 		if(agenda.get(letra) == null)
@@ -103,7 +131,10 @@ public class AgendaContactos implements Comparator<Personal>{
 		}
 		return lista;
 	}
-
+	/**
+	 * Metodo que devuelve los contactos personales que cumplen años hoy
+	 * @return List<Personal>
+	 */
 	public List<Personal> felicitar() {
 		ArrayList<Personal> lista = new ArrayList<>();
 		Set<Character> entry = agenda.keySet();
@@ -120,7 +151,10 @@ public class AgendaContactos implements Comparator<Personal>{
 		}
 		return lista;
 	}
-
+	/**
+	 * Metodo que devuelve un mapa con los contactos personale clasificados segun la relacion
+	 * @return TreeMap<Relacion, List<String>>
+	 */
 	public TreeMap<Relacion, List<String>> personalesPorRelacion() {
 		List<String> list = new ArrayList();
 		List<String> list2 = new ArrayList();
@@ -167,13 +201,20 @@ public class AgendaContactos implements Comparator<Personal>{
 		if(!list6.isEmpty())mapa.put(Relacion.PAREJA, list6);
 		return mapa;
 	}
-
+	/**
+	 * Metodo que devuelve los contactos personales en una letra ordenados por fecha de nacimiento
+	 * @param letra
+	 * @return List<Personal>
+	 */
 	public List<Personal> personalesOrdenadosPorFechaNacimiento(char letra) {
 		List<Personal> lista = personalesEnLetra(letra);
 		Collections.sort(lista, new AgendaContactos());
 		return lista;
 	}
-	
+	/**
+	 * Metodo compare para comparar contactos segun su fecha de nacimiento
+	 * @return El orden
+	 */
 	@Override
 	public int compare(Personal p1, Personal p2) {
 		if (p1.getFechaNacimiento().getYear() > p2.getFechaNacimiento().getYear()) {

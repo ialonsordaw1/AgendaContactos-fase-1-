@@ -19,7 +19,7 @@ public class AgendaContactos implements Comparator<Personal>{
 
 	public void añadirContacto(Contacto c) {
 		List<Contacto> lista2 = new ArrayList<>();
-		Set<Contacto> lista = new HashSet<>();
+		Set<Contacto> lista = new LinkedHashSet<>();
 		if(agenda.isEmpty() || !agenda.containsKey(c.getPrimeraLetra())) {
 			lista2.add(c);
 			Collections.sort(lista2, new ComparatorCon());
@@ -32,6 +32,7 @@ public class AgendaContactos implements Comparator<Personal>{
 		else{
 			lista = agenda.get(c.getPrimeraLetra());
 			lista.add(c);
+			Collections.sort(lista2, new ComparatorCon());
 			agenda.remove(c.getPrimeraLetra());
 			agenda.put(c.getPrimeraLetra(), lista);
 		}

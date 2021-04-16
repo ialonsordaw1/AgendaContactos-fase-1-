@@ -22,11 +22,11 @@ public class TestAgenda {
 		felicitar(agenda);
 		separador();
 
-		personalesOrdenadosPorFecha(agenda, 'm');
+		personalesOrdenadosPorFecha(agenda, 'M');
 		separador();
-		personalesOrdenadosPorFecha(agenda, 'e');
+		personalesOrdenadosPorFecha(agenda, 'E');
 		separador();
-		personalesOrdenadosPorFecha(agenda, 'w');
+		personalesOrdenadosPorFecha(agenda, 'W');
 		separador();
 
 		personalesPorRelacion(agenda);
